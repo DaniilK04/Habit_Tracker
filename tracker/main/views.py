@@ -7,10 +7,10 @@ from .models import *
 from django.views.generic import ListView, DetailView, CreateView
 from django.utils import timezone
 from datetime import timedelta
+from .mixins import *
 
 
-
-class HomeListView(LoginRequiredMixin, ListView):
+class HomeListView(LoginRequiredMixin, ListView, TaskFilterMixin):
     model = Task
     template_name = 'main/home.html'
     context_object_name = 'tasks'
@@ -19,21 +19,7 @@ class HomeListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         queryset = Task.objects.filter(user=self.request.user)
-
-        form = self.form_class(self.request.GET)
-        if form.is_valid():
-            cd = form.cleaned_data
-
-            if cd.get('search'):
-                queryset = queryset.filter(title__icontains=cd['search'])
-
-            if cd.get('status'):
-                queryset = queryset.filter(status=cd['status'])
-
-            if cd.get('sort'):
-                queryset = queryset.order_by(cd['sort'])
-
-        return queryset
+        return self.get_filtered_queryset(queryset)
 
     def get_habit_progress(self, user):
         week_ago = timezone.now().date() - timedelta(days=7)
@@ -81,7 +67,7 @@ class HomeListView(LoginRequiredMixin, ListView):
         return context
 
 
-class TasksListView(LoginRequiredMixin, ListView):
+class TasksListView(LoginRequiredMixin, ListView, TaskFilterMixin):
     model = Task
     template_name = 'main/tasks.html'
     context_object_name = 'tasks'
@@ -89,24 +75,8 @@ class TasksListView(LoginRequiredMixin, ListView):
     form_class = TaskFilterForm
 
     def get_queryset(self):
-        queryset = Task.objects.filter(
-            user=self.request.user
-        )
-        form = self.form_class(
-            self.request.GET
-        )
-        if form.is_valid():
-            cd = form.cleaned_data
-            if cd.get('search'):
-                queryset = queryset.filter(title__icontains=cd['search'])
-
-            if cd.get('status'):
-                queryset = queryset.filter(status=cd['status'])
-
-            if cd.get('sort'):
-                queryset = queryset.order_by(cd['sort'])
-
-        return queryset
+        queryset = Task.objects.filter(user=self.request.user)
+        return self.get_filtered_queryset(queryset)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
