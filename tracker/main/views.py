@@ -93,7 +93,7 @@ class TasksListView(LoginRequiredMixin, ListView, TaskFilterMixin):
 
 
 class TaskAddView(LoginRequiredMixin, CreateView):
-    """ Создание задачи. """
+    """ Создание задачи """
     model = Task
     form_class = TaskForm
     template_name = 'main/add_task.html'
@@ -109,8 +109,8 @@ class TaskAddView(LoginRequiredMixin, CreateView):
         context['title'] = 'Добавление задачи'
         return context
 
-
 class HabitsListView(LoginRequiredMixin, ListView):
+    """ Список привычек с поиском и фильтрацией """
     model = Habit
     template_name = 'main/habits.html'
     context_object_name = 'habits'
@@ -142,6 +142,27 @@ class HabitsListView(LoginRequiredMixin, ListView):
         context['form'] = self.form_class(self.request.GET)
         context['title'] = 'Привычки'
         return context
+
+
+class HabitsAddView(LoginRequiredMixin, CreateView):
+    """ Создание привычки """
+    model = Habit
+    form_class = HabitForm
+    template_name = 'main/add_habit.html'
+    success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        # Django: берёт success_url и делает redirect('home')
+        return super().form_valid(form)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Добавление привычки'
+        return context
+
+
+
 
 
 
