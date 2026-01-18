@@ -51,12 +51,12 @@ class HabitFilterForm(forms.Form):
         required=False,
         label='Активность'
     )
+
     frequency = forms.ChoiceField(
         choices=(('', 'Все'),) + Habit.FREQUENCY_CHOICES,
         required=False,
         label='Частота выполнения'
     )
-
 
 class TaskForm(forms.ModelForm):
     class Meta:
