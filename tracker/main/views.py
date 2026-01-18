@@ -162,7 +162,53 @@ class HabitsAddView(LoginRequiredMixin, CreateView):
         return context
 
 
+class HabitsDetailView(LoginRequiredMixin, DetailView):
+    model = Habit
+    template_name = 'main/habit_detail.html'
+    context_object_name = 'habit'
+    slug_field = 'slug'
+    slug_url_kwarg = 'slug'
 
+    def get_queryset(self):
+        """
+        Ограничиваем доступ:
+        пользователь может видеть ТОЛЬКО свои привычки
+        """
+        return Habit.objects.filter(user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        habit = self.object  # текущая привычка
+
+        # период (например последние 30 дней)
+        period_days = 30
+        start_date = timezone.now().date() - timedelta(days=period_days)
+
+        # логи привычки за период
+        logs = HabitLog.objects.filter(
+            habit=habit,
+            date__gte=start_date
+        ).order_by('date')
+
+        # статистика
+        total_days = logs.count()
+        done_days = logs.filter(is_done=True).count()
+
+        if total_days > 0:
+            progress_percent = int(done_days / total_days * 100)
+        else:
+            progress_percent = 0
+
+        # передаём всё в шаблон
+        context['logs'] = logs
+        context['total_days'] = total_days
+        context['done_days'] = done_days
+        context['progress_percent'] = progress_percent
+        context['period_days'] = period_days
+        context['title'] = f'История привычки: {habit.title}'
+
+        return context
 
 
 
