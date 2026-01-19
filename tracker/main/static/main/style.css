@@ -1,3 +1,6 @@
+/* ----------------------------- */
+/* RESET & BASE STYLES */
+/* ----------------------------- */
 * {
     margin: 0;
     padding: 0;
@@ -16,7 +19,9 @@ body {
     padding: 24px;
 }
 
+/* ----------------------------- */
 /* HEADER */
+/* ----------------------------- */
 .header {
     background: #ffffff;
     border-bottom: 1px solid #e5e7eb;
@@ -46,14 +51,38 @@ body {
     color: #2563eb;
 }
 
+/* Logout button */
+.logout-form {
+    display: inline;
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    margin-left: 20px;
+    font: inherit;
+    font-weight: 500;
+    color: #374151;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    color: #2563eb;
+}
+
+/* ----------------------------- */
 /* FOOTER */
+/* ----------------------------- */
 .footer {
     text-align: center;
     color: #6b7280;
     padding: 20px;
 }
 
+/* ----------------------------- */
 /* MESSAGES */
+/* ----------------------------- */
 .message {
     padding: 12px 16px;
     border-radius: 6px;
@@ -65,7 +94,41 @@ body {
     color: #166534;
 }
 
+/* ----------------------------- */
+/* BUTTONS */
+/* ----------------------------- */
+.btn {
+    display: inline-block;
+    text-align: center;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.2s;
+    color: white;
+}
+
+.btn-add {
+    background-color: #10b981;
+}
+
+.btn-add:hover {
+    background-color: #059669;
+}
+
+.btn-filter {
+    background-color: #2563eb;
+    border: none;
+}
+
+.btn-filter:hover {
+    background-color: #1d4ed8;
+}
+
+/* ----------------------------- */
 /* FORMS */
+/* ----------------------------- */
 .form {
     background: white;
     padding: 30px;
@@ -97,57 +160,85 @@ body {
     background: #1d4ed8;
 }
 
-/* CARDS */
-.card {
-    background: white;
-    padding: 20px;
+/* ----------------------------- */
+/* FILTER FORMS (HABITS & TASKS) */
+/* ----------------------------- */
+.filter-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.filter-form p {
+    margin-bottom: 0;
+}
+
+.filter-form .form-input,
+.filter-form select {
+    flex: 1 1 150px;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #d1d5db;
+}
+
+/* ----------------------------- */
+/* CARDS (HABITS & TASKS) */
+/* ----------------------------- */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.card,
+.card.habit-card,
+.card.task-card {
+    background: #fff;
     border-radius: 12px;
-    margin-bottom: 16px;
+    padding: 16px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover,
+.card.habit-card:hover,
+.card.task-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .card-title {
     font-size: 18px;
     font-weight: 600;
-    text-decoration: none;
     color: #111827;
+    text-decoration: none;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.card-title:hover {
+    color: #2563eb;
 }
 
 .card-meta {
     color: #6b7280;
-    margin-top: 6px;
-}
-.logout-form {
-    display: inline;
+    font-size: 14px;
 }
 
-.logout-btn {
-    background: none;
-    border: none;
-    padding: 0;
-    margin-left: 20px;
-
-    font: inherit;
-    font-weight: 500;
-    color: #374151;
-    cursor: pointer;
+/* ----------------------------- */
+/* EMPTY STATES */
+/* ----------------------------- */
+.empty-text {
+    color: #6b7280;
+    font-style: italic;
+    margin-top: 16px;
 }
 
-.logout-btn:hover {
-    color: #2563eb;
-}
-/* HOME PAGE */
-.home {
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.page-title {
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: 24px;
-}
-
-/* STATS */
+/* ----------------------------- */
+/* HOME PAGE STATS */
+/* ----------------------------- */
 .stats-card {
     background: linear-gradient(135deg, #2563eb, #1d4ed8);
     color: white;
@@ -167,80 +258,9 @@ body {
     font-weight: 700;
 }
 
-/* SECTIONS */
-.section-title {
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 16px;
-}
-
-/* HABITS GRID */
-.cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 16px;
-}
-
-.habit-card {
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.habit-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.06);
-}
-
-.empty-text {
-    color: #6b7280;
-    font-size: 14px;
-}
-/* HOME HEADER */
-.home-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-}
-
-.home-buttons a {
-    text-decoration: none;
-    padding: 10px 18px;
-    border-radius: 8px;
-    font-weight: 600;
-    margin-left: 10px;
-    transition: background 0.2s ease;
-}
-
-.btn {
-    display: inline-block;
-    text-align: center;
-}
-
-.btn-primary {
-    background-color: #2563eb;
-    color: white;
-}
-
-.btn-primary:hover {
-    background-color: #1d4ed8;
-}
-
-.btn-primary-outline {
-    background-color: transparent;
-    color: #2563eb;
-    border: 2px solid #2563eb;
-}
-
-.btn-primary-outline:hover {
-    background-color: #2563eb;
-    color: white;
-}
-/* СТРАНИЦА ПРИВЫЧЕК */
-.habits-page {
-    padding: 20px 0;
-}
-
-/* Заголовок + кнопка */
+/* ----------------------------- */
+/* HOME & PAGE HEADERS */
+/* ----------------------------- */
 .page-header {
     display: flex;
     justify-content: space-between;
@@ -253,139 +273,9 @@ body {
     color: #111827;
 }
 
-.btn {
-    display: inline-block;
-    padding: 10px 18px;
-    border-radius: 6px;
-    font-weight: 600;
-    text-decoration: none;
-    cursor: pointer;
-    transition: 0.2s;
-    color: white;
-}
-
-.btn-add {
-    background-color: #10b981;
-}
-
-.btn-add:hover {
-    background-color: #059669;
-}
-
-.btn-filter {
-    background-color: #2563eb;
-    border: none;
-}
-
-.btn-filter:hover {
-    background-color: #1d4ed8;
-}
-
-/* Фильтр */
-.filter-form {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 24px;
-}
-
-.filter-form p {
-    margin-bottom: 0;
-}
-
-.filter-form .form-input {
-    min-width: 150px;
-    flex: 1;
-}
-
-/* Сетка карточек */
-.cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 20px;
-}
-
-.card {
-    background: #fff;
-    border-radius: 12px;
-    padding: 16px;
-}
-
-.card-title {
-    font-size: 18px;
-    font-weight: 600;
-    color: #111827;
-    text-decoration: none;
-}
-
-.card-title:hover {
-    color: #2563eb;
-}
-
-.card-meta {
-    color: #6b7280;
-    margin-top: 6px;
-}
-
-.empty-text {
-    color: #6b7280;
-    font-style: italic;
-    margin-top: 16px;
-}
-/* СТРАНИЦА ЗАДАЧ */
-.tasks-page {
-    padding: 20px 0;
-}
-
-/* Заголовок + кнопка */
-.tasks-page .page-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.tasks-page .page-header h1 {
-    font-size: 28px;
-    color: #111827;
-}
-
-/* Карточки задач — используем те же стили, что для привычек */
-.task-card {
-    background: #fff;
-    border-radius: 12px;
-    padding: 16px;
-}
-
-.cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 20px;
-}
-
-.card-title {
-    font-size: 18px;
-    font-weight: 600;
-    color: #111827;
-    text-decoration: none;
-}
-
-.card-title:hover {
-    color: #2563eb;
-}
-
-.card-meta {
-    color: #6b7280;
-    margin-top: 6px;
-}
-
-.empty-text {
-    color: #6b7280;
-    font-style: italic;
-    margin-top: 16px;
-}
-
-/* Пагинация */
+/* ----------------------------- */
+/* PAGINATION */
+/* ----------------------------- */
 .pagination {
     display: flex;
     justify-content: center;
@@ -411,144 +301,3 @@ body {
     font-weight: 500;
     color: #111827;
 }
-/* Фильтр задач */
-.filter-form {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-}
-
-.filter-form .form-input {
-    flex: 1 1 150px;
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid #d1d5db;
-}
-
-.filter-form .form-button {
-    padding: 10px 16px;
-    background-color: #2563eb;
-    color: white;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-}
-
-.filter-form .form-button:hover {
-    background-color: #1d4ed8;
-}
-
-/* Кнопка добавления */
-.btn.btn-add {
-    background-color: #10b981;
-    color: white;
-    padding: 10px 16px;
-    border-radius: 6px;
-    text-decoration: none;
-    font-weight: 500;
-}
-
-.btn.btn-add:hover {
-    background-color: #059669;
-}
-
-/* Сетка карточек */
-.cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 20px;
-}
-
-/* Карточка */
-.card {
-    background: #fff;
-    border-radius: 12px;
-    padding: 16px;
-}
-/* Фильтр привычек */
-.filter-form {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-bottom: 20px;
-}
-
-.filter-form .form-input, .filter-form select {
-    flex: 1 1 150px;
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid #d1d5db;
-}
-
-.filter-form .btn.btn-filter {
-    padding: 10px 16px;
-    background-color: #2563eb;
-    color: white;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-}
-
-.filter-form .btn.btn-filter:hover {
-    background-color: #1d4ed8;
-}
-
-/* Сетка карточек */
-.cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 20px;
-}
-
-/* Карточка привычки */
-.card {
-    background: #fff;
-    border-radius: 12px;
-    padding: 16px;
-}
-/* Общий контейнер карточек */
-.cards-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 16px;
-    margin-top: 20px;
-}
-
-/* Карточка привычки */
-.card.habit-card,
-.card.task-card {
-    background: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.card.habit-card:hover,
-.card.task-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-/* Заголовок карточки */
-.card-title {
-    font-size: 18px;
-    font-weight: 600;
-    color: #111827;
-    text-decoration: none;
-    margin-bottom: 8px;
-    display: block;
-}
-
-.card-title:hover {
-    color: #2563eb;
-}
-
-/* Метаданные карточки */
-.card-meta {
-    color: #6b7280;
-    font-size: 14px;
-}
-
-
