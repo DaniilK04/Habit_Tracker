@@ -133,18 +133,29 @@ class CustomLoginForm(AuthenticationForm):
 
 
 class CustomSingUpForm(UserCreationForm):
-    username = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-input',
-        'placeholder': 'Имя пользователя'
-    }))
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs={
-        'class': 'form-input',
-        'placeholder': 'Пароль'
-    }))
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs={
-        'class': 'form-input',
-        'placeholder': 'Повтор пароля'
-    }))
+    username = forms.CharField(
+        label="Логин",
+        widget=forms.TextInput(attrs={
+            'class': 'form-input',
+            'placeholder': 'Введите имя пользователя'
+        })
+    )
+
+    password1 = forms.CharField(
+        label="Пароль",
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-input',
+            'placeholder': 'Введите пароль'
+        })
+    )
+
+    password2 = forms.CharField(
+        label="Повтор пароля",
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-input',
+            'placeholder': 'Повторите пароль'
+        })
+    )
     class Meta:
         model = User
         fields = ("username", "email", "first_name", "last_name", "password1", "password2")

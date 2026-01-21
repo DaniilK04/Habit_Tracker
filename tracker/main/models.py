@@ -4,6 +4,7 @@ from django.utils.text import slugify
 from django.urls import reverse
 from django.conf import settings
 
+
 class Task(models.Model):
     title = models.CharField(
         verbose_name='Название',

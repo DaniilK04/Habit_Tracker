@@ -2,8 +2,6 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
-from .forms import *
-from .models import *
 from django.views.generic import ListView, DetailView, CreateView
 from django.utils import timezone
 from datetime import timedelta
@@ -174,6 +172,7 @@ class HabitsAddView(LoginRequiredMixin, CreateView):
 
 
 class HabitsDetailView(LoginRequiredMixin, DetailView):
+    """ Показ детальной страницы для привычки пользователя """
     model = Habit
     template_name = 'main/habit_detail.html'
     context_object_name = 'habit'
@@ -185,6 +184,8 @@ class HabitsDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # Текущая привычка, которую показывает DetailView.
+        # И сохраняем в переменную, чтобы удобнее работать
         habit = self.object
 
         period_days = 30
@@ -192,12 +193,12 @@ class HabitsDetailView(LoginRequiredMixin, DetailView):
 
         # Логи привычки за период
         logs = HabitLog.objects.filter(
-            habit=habit,
+            habit=habit, # Берем логи только для текущей привычки.
             date__gte=start_date
         ).order_by('date')
 
         # Прогресс
-        total_days = logs.count()
+        total_days = logs.count() # Сколько всего дней есть логов за период.
         done_days = logs.filter(is_done=True).count()
         progress_percent = int(done_days / total_days * 100) if total_days else 0
 
@@ -218,19 +219,25 @@ class HabitsDetailView(LoginRequiredMixin, DetailView):
 
         return context
 
+# View:
+# Здесь View — это класс из Django, точнее базовый класс для всех классовых представлений (Class-Based Views):
+# Он не делает ничего сам по себе, но задаёт базовую структуру для классов, которые будут отвечать на HTTP-запросы (GET, POST, PUT, DELETE и т.д.).
+# Любой класс-наследник View может переопределять методы вроде get() или post(), чтобы обработать соответствующие HTTP-запросы.
 
 class HabitMarkDoneView(LoginRequiredMixin, View):
+    """ Обрабатывает кнопку "Выполнено", которая отмечает привычку как выполненную сегодня """
     def post(self, request, slug):
         habit = get_object_or_404(Habit, slug=slug, user=request.user)
         today = timezone.now().date()
 
         # Проверяем, есть ли лог за сегодня
+        # Проверяет, есть ли уже запись для этой привычки на сегодня.
+        # Если нет — создает новую с is_done=True
         log, created = HabitLog.objects.get_or_create(
             habit=habit,
             date=today,
             defaults={'is_done': True}
         )
-
         if not created:
             messages.info(request, "Вы уже отметили эту привычку сегодня!")
         else:
